@@ -1,4 +1,5 @@
 import time
+import threading
 
 
 def calc_sum_squares(n):
@@ -17,13 +18,17 @@ def main():
     calc_start_time = time.time()
 
     for i in range(10):
-        calc_sum_squares((i + 1) * 1000000)
+        value = (i + 1) * 100000000
+        t = threading.Thread(target=calc_sum_squares, args=(value,))
+        t.start()
+        # current_thread.append(t)
 
     print('Calculating sum of squares took', round(time.time() - calc_start_time, 1))
 
     sleep_start_time = time.time()
     for i in range(1, 5):
-        sleep_a_little(i)
+        t = threading.Thread(target=sleep_a_little, args=(i,))
+        t.start()
 
     print('Sleeping took', round(time.time() - sleep_start_time, 1))
 
